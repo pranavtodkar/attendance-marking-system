@@ -4,7 +4,6 @@ import './App.css';
 import StudentHome from './Pages/StudentHome';
 import TestPage from './Pages/TestPage';
 
-
 const Container = () => {
   let routes = useRoutes([
     // Home route
@@ -26,10 +25,12 @@ const Container = () => {
 
 function App() {
   return (
-    <div class="App">
-      <Router>
-        <Container />
-      </Router> 
+    <div className="justify-center flex">
+      <div className="w-[80vh] justify-centre min-h-[80vh] text-center container">
+        <Router>
+          <Container />
+        </Router>
+      </div>
     </div>
   );
 }
