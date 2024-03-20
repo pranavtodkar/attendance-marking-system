@@ -25,8 +25,8 @@ const Container = () => {
 
 function App() {
   return (
-    <div className="justify-center flex">
-      <div className="w-[80vh] justify-centre min-h-[80vh] text-center container">
+    <div className="justify-center flex h-screen bg-blue-100">
+      <div className="w-[80vh] justify-center text-center container bg-white">
         <Router>
           <Container />
         </Router>
