@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const Button = (props) => {
   return (
     <div>
-      <button onClick={props.redirect}  className='bg-[#0049d9] w-52 h-11 my-2 rounded-lg text-white'>{props.value}</button>
+      <Link to={`/${props.dst}`}><button onClick={props.redirect} className={`${props.css} w-80 h-11 my-2 rounded-lg`} > {props.value}</button></Link>
     </div>
   )
 }
