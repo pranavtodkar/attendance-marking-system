@@ -4,6 +4,7 @@ import './App.css';
 import StudentHome from './Pages/StudentHome';
 import FaceDetection from './Pages/FaceDetection'
 import Marked from './Pages/Marked'
+import DetectionFail from './Pages/DetectionFail'
 
 const Container = () => {
   let routes = useRoutes([
@@ -21,6 +22,11 @@ const Container = () => {
     { path: "/marked", element: 
     <div>
       <Marked />
+    </div>
+    },
+    { path: "/detectFail", element: 
+    <div>
+      <DetectionFail />
     </div>
     },
   ]);
