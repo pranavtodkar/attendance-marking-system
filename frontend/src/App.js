@@ -5,6 +5,9 @@ import StudentHome from './Pages/StudentHome';
 import FaceDetection from './Pages/FaceDetection'
 import Marked from './Pages/Marked'
 import DetectionFail from './Pages/DetectionFail'
+import AdminHome from './Pages/AdminHome';
+import StartAttendance from './Pages/StartAttendance';
+
 
 const Container = () => {
   let routes = useRoutes([
@@ -28,7 +31,18 @@ const Container = () => {
     <div>
       <DetectionFail />
     </div>
+    },{
+      path: "/admin", element: 
+    <div>
+      <AdminHome />
+    </div>
     },
+    {
+      path: "/admin/startAttendance", element: 
+    <div>
+      <StartAttendance />
+    </div>
+    }
   ]);
 
   return routes;

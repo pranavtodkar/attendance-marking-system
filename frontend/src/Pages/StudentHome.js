@@ -2,8 +2,6 @@ import { React , useState } from 'react';
 import image from './logo.jpg'
 import Button from './Button.js'
 
-
-
 function StudentHome() 
 {
   const [rollNo, setRollNo] = useState();
