@@ -8,14 +8,22 @@ function StudentHome()
 
   const onMark = async () => {
     console.log(rollNo)
-    const a = await fetch("http://localhost:8080",{
+    await fetch("http://localhost:8080",{
       method: 'POST',
-      // headers:{
-      //   'Content-Type' : 'application/json',
-      // },
-      // body:{ rollno: rollNo}
-      rollNo
-    })
+      headers:{
+        'Content-Type' : 'application/json',
+      },
+      // body: { rollno: rollNo}
+      body: JSON.stringify({rollNo})
+    });
+
+    // const response = await fetch('/api/users', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({ name, email, age })
+    // });
 
     setRollNo("")
   }

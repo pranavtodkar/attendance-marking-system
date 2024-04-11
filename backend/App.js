@@ -1,11 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 require("dotenv").config();
 
 const app = express();
 
 app.use(morgan("dev"));
+app.use(bodyParser.json());
 app.use(cors({origin: true, credentials: true}));
 
 app.get('/', (req, res) => {
@@ -13,8 +15,8 @@ app.get('/', (req, res) => {
   })
   
 app.post('/', (req, res) => {
-    const {Rollno} = req.body.rollno
-    console.log(Rollno)
+    // const {rollno} = req.body
+    console.log("body:", req.body)
     res.send('Hello World!')
 })
   
