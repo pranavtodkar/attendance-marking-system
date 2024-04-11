@@ -10,10 +10,11 @@ function StudentHome()
     console.log(rollNo)
     const a = await fetch("http://localhost:8080",{
       method: 'POST',
-      headers:{
-        'Content-Type' : 'application/json',
-      },
-      body: JSON.stringify({ rollno: rollNo})
+      // headers:{
+      //   'Content-Type' : 'application/json',
+      // },
+      // body:{ rollno: rollNo}
+      rollNo
     })
 
     setRollNo("")
