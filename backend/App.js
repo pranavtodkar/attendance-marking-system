@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
   })
   
 app.post('/', (req, res) => {
-    const {Rollno} = req.body
+    const {Rollno} = req.body.rollno
     console.log(Rollno)
     res.send('Hello World!')
 })
