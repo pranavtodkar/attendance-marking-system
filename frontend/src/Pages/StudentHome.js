@@ -8,33 +8,26 @@ function StudentHome()
 
   const onMark = async () => {
     console.log(rollNo)
-    await fetch("http://localhost:8080/getFaceData",{
+    const res = await fetch("http://localhost:8080/getFaceData",{
       method: 'POST',
       headers:{
         'Content-Type' : 'application/json',
       },
       body: JSON.stringify({rollNo})
     });
-
-    // const response = await fetch('/api/users', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({ name, email, age })
-    // });
-
+    const data = await res.json();
+    console.log(data)
     setRollNo("")
   }
 
-  useEffect(()=>{
-    const fetchData = async () => {
-      const response = await fetch('/getFaceData')
-      const data = await response.json();
-      console.log(data)
-    }
-    fetchData();
-  }, []);
+  // useEffect(()=>{
+  //   const fetchData = async () => {
+  //     const response = await fetch('http://localhost:8080/getFaceData')
+  //     const data = await response.json();
+  //     console.log(data)
+  //   }
+  //   fetchData();
+  // }, []);
 
   const handleChange = (e) =>{
     setRollNo(e.target.value)  
