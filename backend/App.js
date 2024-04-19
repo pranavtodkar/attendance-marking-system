@@ -10,7 +10,7 @@ const client = new Client({
     host: "localhost",
     user: "postgres",
     port: 5432,
-    password: "1234",
+    password: "kashvi05",
     database: "attendance-marking"
 })
 client.connect();
@@ -37,6 +37,21 @@ app.post ('/getFaceData', (req, res) => {
           console.log(err.message)
       }
   });
+});
+
+app.post ('/getMyCourses', (req, res) => {
+  const {teacher_id } = req.body
+  console.log("teacher_id:", teacher_id)
+  client.query(`SELECT course_code FROM course_teachers WHERE teacher_id=${teacher_id};`, (err,data)=>{
+    if(!err){
+      console.log("backend:", data.rows)
+      res.json(data.rows)
+    }
+    else{
+        console.log(err.message)
+        res.statusCode("500")
+    }
+});
 });
 
 const port = process.env.PORT || 8080;

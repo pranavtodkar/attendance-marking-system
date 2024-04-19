@@ -1,7 +1,12 @@
 import React from 'react'
 import Button from './Button'
+import {useLocation} from 'react-router-dom'
 
 const StartAttendance = () => {
+    const location = useLocation();
+    const courses = location.state && location.state.courses;
+    console.log("courses:", courses);
+
     const details = {
         name: 'Hard Kapadia',
         userName: 2206316,
