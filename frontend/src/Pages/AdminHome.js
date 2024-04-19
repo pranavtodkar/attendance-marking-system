@@ -15,7 +15,6 @@ function AdminHome()
 
   const [user, setUser] = useState({});
   const [verify, setVerify] = useState(false);
-  const [courses, setCourses] = useState(null);
 
   const onMark = async () => {
     // if(user.id === details[0].id && user.pswd === details[0].pswd)
@@ -41,7 +40,7 @@ function AdminHome()
       )
     });
     const courses = await res.json();
-    console.log("courses:", courses);
+    // console.log("courses:", courses);
     navigate('/admin/startAttendance', { state: {courses} });
   }
 
