@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
 const StartAttendance = () => {
-    const teacher_ip = '12.105.124.139';
+    const teacher_ip = '12';
     const location = useLocation();
     const courses = location.state && location.state.courses;
     console.log("courses:", courses);
@@ -16,6 +16,22 @@ const StartAttendance = () => {
         setCourseName(e.target.value);
         console.log(courseName)
     };
+
+    const beginAttendance = async () => {
+        await fetch("http://localhost:8080/startAttendance",{
+            method: 'POST',
+            headers:{
+              'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify(
+              {
+                teacher_ip: teacher_ip,
+                course_code1 : courseName,
+              }
+            )
+          });
+    }
+    
 
     const details = {
         name: 'Hard Kapadia',
@@ -46,7 +62,7 @@ const StartAttendance = () => {
                         ))}
                     </select>
                 </div>
-                <button className='w-80 h-11 my-2 rounded-lg text-white bg-[#046D28]'>Start Attendance</button>
+                <button  onClick={beginAttendance} className='w-80 h-11 my-2 rounded-lg text-white bg-[#046D28]'>Start Attendance</button>
                 <button className='w-80 h-11 my-2 rounded-lg text-white bg-[#FF0000]'>Stop Attendance</button>
                 <Button value='Home' css='text-white bg-[#0049d9]' dst='admin' ></Button>
             </div>
@@ -56,3 +72,5 @@ const StartAttendance = () => {
 }
 
 export default StartAttendance
+
+
