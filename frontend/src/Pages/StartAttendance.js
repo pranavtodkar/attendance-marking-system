@@ -4,7 +4,8 @@ import { useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
 const StartAttendance = () => {
-    const teacher_ip = '12';
+    const teacherIp = "10.196.35.24";
+    
     const location = useLocation();
     const courses = location.state && location.state.courses;
     console.log("courses:", courses);
@@ -25,12 +26,28 @@ const StartAttendance = () => {
             },
             body: JSON.stringify(
               {
-                teacher_ip: teacher_ip,
-                course_code1 : courseName,
+                teacher_ip: teacherIp,
+                course_code : courseName,
               }
             )
           });
     }
+
+    const stopAttendance = async () => {
+        await fetch("http://localhost:8080/stopAttendance",{
+            method: 'POST',
+            headers:{
+              'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify(
+              {
+                
+                course_code : courseName,
+              }
+            )
+          });
+    }
+    
     
 
     const details = {
@@ -63,7 +80,7 @@ const StartAttendance = () => {
                     </select>
                 </div>
                 <button  onClick={beginAttendance} className='w-80 h-11 my-2 rounded-lg text-white bg-[#046D28]'>Start Attendance</button>
-                <button className='w-80 h-11 my-2 rounded-lg text-white bg-[#FF0000]'>Stop Attendance</button>
+                <button onClick={stopAttendance} className='w-80 h-11 my-2 rounded-lg text-white bg-[#FF0000]'>Stop Attendance</button>
                 <Button value='Home' css='text-white bg-[#0049d9]' dst='admin' ></Button>
             </div>
 

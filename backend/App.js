@@ -55,24 +55,29 @@ app.post('/getMyCourses', (req, res) => {
 });
 
 app.post('/startAttendance', (req, res) => {
-  const { teacher_ip , course_code1 } = req.body
+  const { teacher_ip , course_code } = req.body
   console.log("teacher_ip:", teacher_ip)
-  console.log("course :", course_code1)
-  console.log(typeof(course_code1))
-
-  
-  // const current = new Date() 
-  // const NOW = current.toISOString(); 
-  // console.log([NOW])
-  client.query(`insert into public.attendance_session (course_code, teacher_ip, attendance_on , start_time_) VALUES ('${course_code1}',${teacher_ip} , false,5);`, (err, data) => {
+  console.log("course :", course_code)
+  client.query(`insert into public.attendance_session (course_code, teacher_ip, attendance_on , start_time) VALUES ('${course_code}','${teacher_ip}' , true, CURRENT_TIMESTAMP);`, (err, data) => {
     if (!err) {
       console.log("Attendance is started")
-      // console.log("backend:", data.rows)
-      // res.json(data.rows)
     }
     else {
       console.log(err.message)
-      //res.statusCode("500")
+      
+    }
+  });
+});
+
+app.post('/stopAttendance', (req, res) => {
+  const { course_code } = req.body
+  client.query(`UPDATE attendance_session SET attendance_on = false WHERE course_code = '${course_code}' AND attendance_on = true;`, (err, data) => {
+    if (!err) {
+      console.log("Attendance is stopped")
+    }
+    else {
+      console.log(err.message)
+      
     }
   });
 });
@@ -80,4 +85,3 @@ app.post('/startAttendance', (req, res) => {
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () => console.log(`Server is running on port ${port}`));
 
-// ${[NOW]}
