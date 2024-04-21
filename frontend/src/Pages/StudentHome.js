@@ -1,10 +1,25 @@
 import { React , useEffect, useState } from 'react';
 import image from './logo.jpg'
 import Button from './Button.js'
+import { Link, useNavigate } from 'react-router-dom';
+
 
 function StudentHome() 
 {
+  const navigate = useNavigate();
+  const studentIp = "10.196.35.24";
   const [rollNo, setRollNo] = useState();
+  // useEffect( async ()=>{
+  //   const res = await fetch("http://localhost:8080/getAttendSession",{
+  //     method: 'POST',
+  //     headers:{
+  //       'Content-Type' : 'application/json',
+  //     },
+  //     body: JSON.stringify({studentIp})
+  //   });
+  //   const data = await res.json();
+  //   console.log(data);
+  // }, []);
 
   const onMark = async () => {
     console.log(rollNo)
@@ -15,19 +30,21 @@ function StudentHome()
       },
       body: JSON.stringify({rollNo})
     });
-    const data = await res.json();
-    console.log(data)
+    const face_data = await res.json();
+    console.log(face_data)
     setRollNo("")
+    const response = await fetch("http://localhost:8080/getAttendSession",{
+      method: 'POST',
+      headers:{
+        'Content-Type' : 'application/json',
+      },
+      body: JSON.stringify({student_ip : studentIp})
+    });
+    const id = await response.json();
+    console.log(id.id);
+    navigate('/verify', { state: {id,rollNo,face_data} });
   }
 
-  // useEffect(()=>{
-  //   const fetchData = async () => {
-  //     const response = await fetch('http://localhost:8080/getFaceData')
-  //     const data = await response.json();
-  //     console.log(data)
-  //   }
-  //   fetchData();
-  // }, []);
 
   const handleChange = (e) =>{
     setRollNo(e.target.value)  

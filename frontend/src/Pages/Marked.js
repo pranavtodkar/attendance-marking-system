@@ -2,6 +2,7 @@ import React from 'react'
 import image from './check.png' 
 import Button from './Button'
 
+
 const marked = () => {
     const details = {
         name: 'Hard Kapadia',

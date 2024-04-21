@@ -10,7 +10,7 @@ const client = new Client({
   host: "localhost",
   user: "postgres",
   port: 5432,
-  password: "4304",
+  password: "1234",
   database: "attendance-marking"
 })
 client.connect();
@@ -81,6 +81,37 @@ app.post('/stopAttendance', (req, res) => {
     }
   });
 });
+
+app.post('/getAttendSession', (req, res) => {
+  const { student_ip } = req.body
+  console.log("student_ip:", student_ip)
+  client.query(`SELECT id FROM attendance_session WHERE teacher_ip='${student_ip}' AND attendance_on = true;`, (err, data) => {
+    if (!err) {
+      console.log("id:", data.rows[0])
+      res.json(data.rows[0])
+    }
+    else {
+      console.log(err.message)
+      //res.statusCode("500")
+    }
+  });
+});
+
+app.post('/markAttendance', (req, res) => {
+  const { roll_no , attendance_session_id } = req.body
+  console.log("roll_no:", roll_no)
+  console.log("attendance_session_id :", attendance_session_id)
+  client.query(`INSERT INTO attendance (attendance_session_id, roll_no, marked_at) VALUES (${attendance_session_id}, ${roll_no}, CURRENT_TIMESTAMP);`, (err, data) => {
+    if (!err) {
+      console.log("Attendance Marked")
+    }
+    else {
+      console.log(err.message)
+    }
+  });
+});
+
+
 
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () => console.log(`Server is running on port ${port}`));

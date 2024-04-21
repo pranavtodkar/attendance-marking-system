@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
 const StartAttendance = () => {
-    const teacherIp = "10.196.35.24";
+    const teacher_ip = "10.196.35.24";
     
     const location = useLocation();
     const courses = location.state && location.state.courses;
@@ -13,7 +13,6 @@ const StartAttendance = () => {
     const [courseName, setCourseName] = useState(null);
 
     const handleSelectChange = (e) => {
-
         setCourseName(e.target.value);
         console.log(courseName)
     };
@@ -26,7 +25,7 @@ const StartAttendance = () => {
             },
             body: JSON.stringify(
               {
-                teacher_ip: teacherIp,
+                teacher_ip: teacher_ip,
                 course_code : courseName,
               }
             )
@@ -41,7 +40,6 @@ const StartAttendance = () => {
             },
             body: JSON.stringify(
               {
-                
                 course_code : courseName,
               }
             )
