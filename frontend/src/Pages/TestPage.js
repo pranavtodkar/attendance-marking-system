@@ -1,12 +1,11 @@
 import { React , useEffect, useState } from 'react';
 
 function TestPage() {
-    
-
+  
   
   return (
     <div>
-      Hello
+      This is a test page.
     </div>
   );
 }

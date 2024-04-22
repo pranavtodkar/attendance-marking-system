@@ -8,8 +8,6 @@ import DetectionFail from './Pages/DetectionFail'
 import AdminHome from './Pages/AdminHome';
 import StartAttendance from './Pages/StartAttendance';
 import TestPage from './Pages/TestPage';
-import UserSelect from './Pages/UserSelect';
-import Login from './Pages/Login';
 import RegisterFace from './Pages/RegisterFace';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -50,29 +48,16 @@ const Container = () => {
     </div>
     },
     {
-      path: "/test", element: 
-    <div>
-      <TestPage />
-    </div>
-    },
-    {
-      path: "/userselect", element: 
-      <div>
-        <UserSelect />
-      </div>
-    },
-    {
-      path: "/login", element: 
-      <div>
-        <Login />
-      </div>
-    },
-
-    {
       path: "/registerface", element: 
       <div>
         <RegisterFace />
       </div>
+    },    
+    {
+      path: "/test", element: 
+    <div>
+      <TestPage />
+    </div>
     },
     
   ]);

@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import * as faceapi from "face-api.js";
 import { toast } from "react-toastify";
 
@@ -84,6 +84,12 @@ function RegisterFace() {
 
     return (
         <div>
+            <div className='flex flex-col justify-center px-14 w-full mt-3'>
+            <h1 className='my-10 text-2xl text-left font-bold text-[#002772]'>Register Face</h1>
+            <h1 className=' text-left font-bold'>Roll Number</h1>
+            <input value = {rollNo} className='border-2 pl-6 text-[#999999] w-full border-[#999999] w-80 h-11 my-2 rounded-lg ' type='text' disabled></input>
+            <h1 className=' text-left font-bold mt-10'>Your Photo please</h1>
+            </div> 
             {image &&
                 <div className="w-full p-4 text-right">
                     <div className="mx-auto w-full max-w-md">
@@ -132,7 +138,7 @@ function RegisterFace() {
                 <div className="flex flex-col px-16 items-center justify-center w-full mt-3">
                     <label
                         htmlFor="dropzone-file"
-                        className="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:border-indigo-200 hover:bg-gray-100"
+                        className="flex h-40 flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:border-indigo-200 hover:bg-gray-100"
                     >
                         <div className="flex flex-col items-center justify-center py-4">
                             <svg
@@ -195,7 +201,7 @@ function RegisterFace() {
             <button
                 onClick={async () => {
                     if(!descriptor) {
-                        alert("Please upload an image first.");
+                        toast.error("Please upload a photo.");
                         return;
                     }
                     const descriptorString = descriptor.toString();
@@ -217,24 +223,11 @@ function RegisterFace() {
                     }
 
                 }}
-                className="mt-4 justify-end inline-flex items-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600"
+                className="text-white bg-[#0049d9] w-80 h-11 mt-10 my-2 rounded-lg"
             >
                 Register
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="ml-1.5 h-5 w-5"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                    />
-                </svg>
             </button>
+            <Link to={`/`}><button className={`bg-white text-[#0049d9] border-2 w-80 h-11 my-2 rounded-lg`} > Home</button></Link>
         </div>
     );
 }
