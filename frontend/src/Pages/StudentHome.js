@@ -4,13 +4,24 @@ import { Link } from 'react-router-dom';
 
 function StudentHome() 
 {
+  const studentIp = "10.196.35.24";
   const [rollNo, setRollNo] = useState();
+  // useEffect( async ()=>{
+  //   const res = await fetch("http://localhost:8080/getAttendSession",{
+  //     method: 'POST',
+  //     headers:{
+  //       'Content-Type' : 'application/json',
+  //     },
+  //     body: JSON.stringify({studentIp})
+  //   });
+  //   const data = await res.json();
+  //   console.log(data);
+  // }, []);
 
   const handleChange = (e) =>{
     setRollNo(e.target.value)  
   }
 
-  // Pending: Allow only if connected to existing Attendance Session (Check by IP)
   
   return (
     <>
