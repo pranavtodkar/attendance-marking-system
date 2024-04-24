@@ -13,7 +13,7 @@ const client = new Client({
   host: "localhost",
   user: "postgres",
   port: 5432,
-  password: process.env.DB_PASSWORD,
+  password: process.env.POSTGRES_PASSWORD,
   database: "attendance-marking"
 })
 client.connect();
