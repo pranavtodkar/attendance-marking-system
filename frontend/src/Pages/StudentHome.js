@@ -1,54 +1,47 @@
-import { React , useEffect, useState } from 'react';
+import { React , useState,useEffect } from 'react';
 import image from './logo.jpg'
-import Button from './Button.js'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-
-function StudentHome() 
-{
+function StudentHome() {
   const navigate = useNavigate();
-  const studentIp = "10.196.35.24";
+
   const [rollNo, setRollNo] = useState();
-  // useEffect( async ()=>{
-  //   const res = await fetch("http://localhost:8080/getAttendSession",{
-  //     method: 'POST',
-  //     headers:{
-  //       'Content-Type' : 'application/json',
-  //     },
-  //     body: JSON.stringify({studentIp})
-  //   });
-  //   const data = await res.json();
-  //   console.log(data);
-  // }, []);
 
-  const onMark = async () => {
-    console.log(rollNo)
-    const res = await fetch("http://localhost:8080/getFaceData",{
+  const getAttendSessionJWT = async (e) =>{
+    e.preventDefault();
+    if(rollNo === null || rollNo === undefined){
+      toast.error("Please enter Roll No.");
+      return;
+    }
+
+    console.log('rollNo:', rollNo);
+
+    const res = await fetch("http://localhost:8080/getAttendSessionJWT",{
       method: 'POST',
       headers:{
-        'Content-Type' : 'application/json',
+        'Content-Type' : 'application/json'        
       },
-      body: JSON.stringify({rollNo})
+      body: JSON.stringify({ rollNo })
     });
-    const face_data = await res.json();
-    console.log(face_data)
-    setRollNo("")
-    const response = await fetch("http://localhost:8080/getAttendSession",{
-      method: 'POST',
-      headers:{
-        'Content-Type' : 'application/json',
-      },
-      body: JSON.stringify({student_ip : studentIp})
-    });
-    const id = await response.json();
-    console.log(id.id);
-    navigate('/verify', { state: {id,rollNo,face_data} });
+
+    const { sessionExists, course_code, JWT } = await res?.json();
+
+    if(!sessionExists){
+      toast.error("No Attendance Ongoing");
+      return;
+    }
+
+    localStorage.setItem('JWT', JWT);
+    toast.success(`${course_code} Attendance`);
+
+    navigate('/verify');
   }
-
 
   const handleChange = (e) =>{
-    setRollNo(e.target.value)  
+    setRollNo(e.target.value === "" ? null : e.target.value);  
   }
+
   
   return (
     <>
@@ -56,11 +49,17 @@ function StudentHome()
         <img width = "175px" height = "183px" src = {image} alt="" />
       </div>
       <div className="mt-8">
-        <form>
-          <input value = {rollNo} onChange={handleChange} className='border-2 border-[#0049d9] w-80 h-11 my-2 rounded-lg pl-2' type='text' placeholder='Enter Roll No. '></input>
-        </form>
-        <Button css = 'text-white bg-[#0049d9]' value='Mark Attendance' redirect = {onMark} dst = "" ></Button>
-        
+        <form onSubmit={getAttendSessionJWT}>
+          <input
+            value={rollNo} onChange={handleChange} className="border-2 border-[#0049d9] w-80 h-11 my-2 rounded-lg pl-2" type="text" placeholder="Enter Roll No."
+          />
+          <button
+            type="submit"
+            className={`text-white bg-[#0049d9] w-80 h-11 my-2 rounded-lg`}
+          >
+            Mark Attendance
+          </button>
+        </form>        
       </div>
     </>
   );

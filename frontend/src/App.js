@@ -7,6 +7,10 @@ import Marked from './Pages/Marked'
 import DetectionFail from './Pages/DetectionFail'
 import AdminHome from './Pages/AdminHome';
 import StartAttendance from './Pages/StartAttendance';
+import TestPage from './Pages/TestPage';
+import RegisterFace from './Pages/RegisterFace';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Container = () => {
@@ -42,7 +46,20 @@ const Container = () => {
     <div>
       <StartAttendance />
     </div>
-    }
+    },
+    {
+      path: "/registerface", element: 
+      <div>
+        <RegisterFace />
+      </div>
+    },    
+    {
+      path: "/test", element: 
+    <div>
+      <TestPage />
+    </div>
+    },
+    
   ]);
 
   return routes;
@@ -56,6 +73,7 @@ function App() {
         <div className='flex h-12 bg-[#002772] text-white justify-center text-center items-center'>Attendance Marking System</div>
         <Router>
           <Container />
+          <ToastContainer />
         </Router>
       </div>
     </div>
