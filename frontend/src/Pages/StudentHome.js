@@ -17,7 +17,7 @@ function StudentHome() {
 
     console.log('rollNo:', rollNo);
 
-    const res = await fetch("http://localhost:8080/getAttendSessionJWT",{
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getAttendSessionJWT`,{
       method: 'POST',
       headers:{
         'Content-Type' : 'application/json'        

@@ -20,7 +20,7 @@ const StartAttendance = () => {
 
     useEffect(() => {
       const getMyCourses = async () => {
-        const res = await fetch("http://localhost:8080/getMyCourses",{
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getMyCourses`,{
           method: 'POST',
           headers:{
             'Content-Type' : 'application/json',
@@ -45,7 +45,7 @@ const StartAttendance = () => {
         toast.error("Please select a course");
         return;
       }
-      await fetch("http://localhost:8080/startAttendance",{
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/startAttendance`,{
           method: 'POST',
           headers:{
             'Content-Type' : 'application/json',
@@ -65,7 +65,7 @@ const StartAttendance = () => {
         toast.error("Please select a course");
         return;
       }
-      await fetch("http://localhost:8080/stopAttendance",{
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/stopAttendance`,{
           method: 'POST',
           headers:{
             'Content-Type' : 'application/json',

@@ -34,7 +34,7 @@ const FaceDetection = () => {
 
   useEffect(() => {
     const getFaceData = async () => {
-      const response = await fetch('http://localhost:8080/getFaceData', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getFaceData`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const FaceDetection = () => {
         clearInterval(faceApiIntervalRef.current);
 
         const markAttendance = async () => {
-          const res = await fetch("http://localhost:8080/markAttendance",{
+          const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/markAttendance`,{
             method: 'POST',
             headers:{
               'Content-Type' : 'application/json',
