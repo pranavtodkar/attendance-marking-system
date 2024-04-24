@@ -1,7 +1,6 @@
 import { React , useState } from 'react';
-import image from './logo.jpg'
-import Button from './Button.js'
-import { Link, useNavigate } from 'react-router-dom';
+import image from '../images/logo.jpg';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 
@@ -10,7 +9,6 @@ function AdminHome() {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({});
-  const [verify, setVerify] = useState(false);
 
   const onLogin = async () => {
     if(user.id === undefined || user.id === "" 
