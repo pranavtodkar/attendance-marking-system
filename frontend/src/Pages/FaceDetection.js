@@ -7,11 +7,6 @@ import * as faceapi from 'face-api.js';
 import { toast } from "react-toastify";
 
 const FaceDetection = () => {
-  const location = useLocation();
-  const rollNo = location.state.rollNo;
-
-  console.log('rollNo:', rollNo);
-
   const navigate = useNavigate();
 
   const [localUserStream, setLocalUserStream] = useState(null);
@@ -43,13 +38,13 @@ const FaceDetection = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ rollNo }),
+          'Authorization': localStorage.getItem('JWT')
+        }
       });
       const data = await response.json();
       console.log('data:', data);
       if (data.status === 'No Face Data Found') {
-        navigate('/registerface', { state: { rollNo } });
+        navigate('/registerface');
         return;
       }
 
@@ -65,7 +60,7 @@ const FaceDetection = () => {
 
       loadModels()
       .then(async () => {
-        const labeledFaceDescriptors = new faceapi.LabeledFaceDescriptors(rollNo, descriptions);
+        const labeledFaceDescriptors = new faceapi.LabeledFaceDescriptors('user_label', descriptions);
         setLabeledFaceDescriptors(labeledFaceDescriptors);
       })
       .then(() => setModelsLoaded(true));
@@ -93,7 +88,22 @@ const FaceDetection = () => {
         clearInterval(counterInterval);
         clearInterval(faceApiIntervalRef.current);
 
-        toast.success(`Mark attendance for ${rollNo}!`)
+        const markAttendance = async () => {
+          const res = await fetch("http://localhost:8080/markAttendance",{
+            method: 'POST',
+            headers:{
+              'Content-Type' : 'application/json',
+              'Authorization': localStorage.getItem('JWT')
+            }
+          });
+          const data = await res.json();
+          console.log("data:", data);
+          toast.success(`Attendance marked successfully.`);
+
+          navigate('/marked', { state: { attendanceData : data } });  
+        }
+        markAttendance();   
+
       }
 
       return () => clearInterval(counterInterval);
@@ -154,7 +164,7 @@ const FaceDetection = () => {
       faceapi.draw.drawDetections(canvasRef.current, resizedDetections);
       faceapi.draw.drawFaceLandmarks(canvasRef.current, resizedDetections);
 
-      if (results.length > 0 && rollNo === results[0].label) {
+      if (results.length > 0 && 'user_label' === results[0].label) {
         setLoginResult("SUCCESS");
       } else {
         setLoginResult("FAILED");

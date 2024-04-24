@@ -1,25 +1,45 @@
-import { React , useState } from 'react';
+import { React , useState,useEffect } from 'react';
 import image from './logo.jpg'
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-function StudentHome() 
-{
-  const studentIp = "10.196.35.24";
+function StudentHome() {
+  const navigate = useNavigate();
+
   const [rollNo, setRollNo] = useState();
-  // useEffect( async ()=>{
-  //   const res = await fetch("http://localhost:8080/getAttendSession",{
-  //     method: 'POST',
-  //     headers:{
-  //       'Content-Type' : 'application/json',
-  //     },
-  //     body: JSON.stringify({studentIp})
-  //   });
-  //   const data = await res.json();
-  //   console.log(data);
-  // }, []);
+
+  const getAttendSessionJWT = async (e) =>{
+    e.preventDefault();
+    if(rollNo === null || rollNo === undefined){
+      toast.error("Please enter Roll No.");
+      return;
+    }
+
+    console.log('rollNo:', rollNo);
+
+    const res = await fetch("http://localhost:8080/getAttendSessionJWT",{
+      method: 'POST',
+      headers:{
+        'Content-Type' : 'application/json'        
+      },
+      body: JSON.stringify({ rollNo })
+    });
+
+    const { sessionExists, course_code, JWT } = await res?.json();
+
+    if(!sessionExists){
+      toast.error("No Attendance Ongoing");
+      return;
+    }
+
+    localStorage.setItem('JWT', JWT);
+    toast.success(`${course_code} Attendance`);
+
+    navigate('/verify');
+  }
 
   const handleChange = (e) =>{
-    setRollNo(e.target.value)  
+    setRollNo(e.target.value === "" ? null : e.target.value);  
   }
 
   
@@ -29,17 +49,17 @@ function StudentHome()
         <img width = "175px" height = "183px" src = {image} alt="" />
       </div>
       <div className="mt-8">
-        <form>
-          <input value = {rollNo} onChange={handleChange} className='border-2 border-[#0049d9] w-80 h-11 my-2 rounded-lg pl-2' type='text' placeholder='Enter Roll No. '></input>
-        </form>
-
-        <Link 
-          to="/verify"
-          state={{rollNo}}
-        >
-          <button className={`text-white bg-[#0049d9] w-80 h-11 my-2 rounded-lg`} > Mark Attendance </button>
-        </Link>
-        
+        <form onSubmit={getAttendSessionJWT}>
+          <input
+            value={rollNo} onChange={handleChange} className="border-2 border-[#0049d9] w-80 h-11 my-2 rounded-lg pl-2" type="text" placeholder="Enter Roll No."
+          />
+          <button
+            type="submit"
+            className={`text-white bg-[#0049d9] w-80 h-11 my-2 rounded-lg`}
+          >
+            Mark Attendance
+          </button>
+        </form>        
       </div>
     </>
   );

@@ -7,6 +7,7 @@ function RegisterFace() {
 
     const location = useLocation();
     const rollNo = location.state.rollNo;
+    const attendanceSession = location.state.attendanceSession;
 
     const navigate = useNavigate();
 
@@ -209,15 +210,16 @@ function RegisterFace() {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
+                            'Authorization': localStorage.getItem('JWT')
                         },
-                        body: JSON.stringify({ rollNo, descriptor: descriptorString }),
+                        body: JSON.stringify({ descriptor: descriptorString }),
                     });
                     const data = await response.json();
                     console.log("data:", data);
 
                     if(response.status === 200) {
                         toast.success("Face Data Registered");
-                        navigate("/verify", { state: { rollNo } });
+                        navigate("/verify");
                     }else{
                         toast.error("Something went wrong. Please try again.");
                     }

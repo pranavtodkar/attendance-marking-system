@@ -1,14 +1,20 @@
 import React from 'react'
 import image from './check.png' 
 import Button from './Button'
+import { useLocation } from 'react-router-dom';
 
 
-const marked = () => {
+const Marked = () => {
+
+    const location = useLocation();
+    const attendanceData = location.state && location.state.attendanceData;
+    console.log("attendanceData:", attendanceData);
+    
     const details = {
-        name: 'Hard Kapadia',
-        rollno: 2206316,
-        branch: 'Mathematics & Computing',
-        courseCode: 'BIO101' 
+        name: attendanceData.data.name,
+        rollno: attendanceData.data.roll_no,
+        courseCode: attendanceData.data.course_code,
+        markedAt: attendanceData.data.marked_at
     }
   return (
     <>
@@ -17,9 +23,9 @@ const marked = () => {
         <ul className='text-left items-center'>
             <li><b className='text-[#002772]'>Name:</b> {details.name}</li>
             <li><b className='text-[#002772]'>Roll No.:</b> {details.rollno} </li>
-            <li><b className='text-[#002772]'>Branch :</b> {details.branch}</li>
+            {/* <li><b className='text-[#002772]'>Branch :</b> {details.branch}</li> */}
             <li><b className='text-[#002772]'>Course Code:</b> {details.courseCode}</li>
-            <li><b className='text-[#002772]'>Date:</b> XX/XX/2024</li>
+            <li><b className='text-[#002772]'>Date:</b> {new Date(details.markedAt).toLocaleString('en-US', {timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit'})}</li>
         </ul>
         </div>
         <img className='mx-auto mt-20' width = "175px" height = "183px" src = {image}  />
@@ -29,4 +35,4 @@ const marked = () => {
   )
 }
 
-export default marked
+export default Marked;
