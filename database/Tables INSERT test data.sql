@@ -18,7 +18,6 @@ VALUES
 INSERT INTO courses (course_code, name)
 VALUES
     ('CH102', 'Biochemistry'),
-    ('CH102', 'Chemical physics'), -- Duplicate course_code, should be unique
     ('CH103', 'Geochemistry'),
     ('CH104', 'Material science');
 

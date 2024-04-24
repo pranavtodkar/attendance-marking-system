@@ -5,10 +5,6 @@ import { toast } from "react-toastify";
 
 function RegisterFace() {
 
-    const location = useLocation();
-    const rollNo = location.state.rollNo;
-    const attendanceSession = location.state.attendanceSession;
-
     const navigate = useNavigate();
 
     const [image, setImage] = useState(null);
@@ -87,9 +83,7 @@ function RegisterFace() {
         <div>
             <div className='flex flex-col justify-center px-14 w-full mt-3'>
             <h1 className='my-10 text-2xl text-left font-bold text-[#002772]'>Register Face</h1>
-            <h1 className=' text-left font-bold'>Roll Number</h1>
-            <input value = {rollNo} className='border-2 pl-6 text-[#999999] w-full border-[#999999] w-80 h-11 my-2 rounded-lg ' type='text' disabled></input>
-            <h1 className=' text-left font-bold mt-10'>Your Photo please</h1>
+            <h1 className=' text-left font-bold'>Your Photo please</h1>
             </div> 
             {image &&
                 <div className="w-full p-4 text-right">
