@@ -102,7 +102,7 @@ const StartAttendance = () => {
                 </div>
                 <button  onClick={beginAttendance} className='w-80 h-11 my-2 rounded-lg text-white bg-[#046D28]'>Start Attendance</button>
                 <button onClick={stopAttendance} className='w-80 h-11 my-2 rounded-lg text-white bg-[#FF0000]'>Stop Attendance</button>
-                <Button value='Home' css='bg-white text-[#0049d9] border-2' dst='admin' ></Button>
+                <Button value='Home' css='bg-white text-[#0049d9] border-2' dst='faculty' ></Button>
             </div>
 
         </>
