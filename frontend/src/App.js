@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import StudentHome from './Pages/StudentHome';
 import FaceDetection from './Pages/FaceDetection'
 import Marked from './Pages/Marked'
-import AdminHome from './Pages/AdminHome';
+import FacultyHome from './Pages/FacultyHome';
 import StartAttendance from './Pages/StartAttendance';
 import TestPage from './Pages/TestPage';
 import RegisterFace from './Pages/RegisterFace';
@@ -29,13 +29,13 @@ const Container = () => {
     </div>
     },
     {
-      path: "/admin", element: 
+      path: "/faculty", element: 
     <div>
-      <AdminHome />
+      <FacultyHome />
     </div>
     },
     {
-      path: "/admin/startAttendance", element: 
+      path: "/faculty/startAttendance", element: 
     <div>
       <StartAttendance />
     </div>

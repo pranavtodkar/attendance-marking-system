@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 
-function AdminHome() {
+function FacultyHome() {
 
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ function AdminHome() {
 
     // Login Logic
 
-    navigate('/admin/startAttendance', { state: { teacher_id: user.id } });
+    navigate('/faculty/startAttendance', { state: { teacher_id: user.id } });
   }
 
   const handleChange = (e) => {
@@ -54,4 +54,4 @@ function AdminHome() {
   );
 }
 
-export default AdminHome;
+export default FacultyHome;
