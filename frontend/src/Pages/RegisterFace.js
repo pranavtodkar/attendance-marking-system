@@ -200,7 +200,7 @@ function RegisterFace() {
                         return;
                     }
                     const descriptorString = descriptor.toString();
-                    const response = await fetch("http://localhost:8080/registerFace", {
+                    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/registerFace`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
