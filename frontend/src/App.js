@@ -1,27 +1,24 @@
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
 import './App.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import StudentHome from './Pages/StudentHome';
 import FaceDetection from './Pages/FaceDetection'
 import Marked from './Pages/Marked'
-import DetectionFail from './Pages/DetectionFail'
 import AdminHome from './Pages/AdminHome';
 import StartAttendance from './Pages/StartAttendance';
 import TestPage from './Pages/TestPage';
 import RegisterFace from './Pages/RegisterFace';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 const Container = () => {
   let routes = useRoutes([
-    // Home route
     { path: "/", element: 
     <div>
       <StudentHome />
     </div>
     },
-    { path: "/verify", element: 
+    { path: "/facedetection", element: 
     <div>
       <FaceDetection />
     </div>
@@ -31,11 +28,7 @@ const Container = () => {
       <Marked />
     </div>
     },
-    { path: "/detectFail", element: 
-    <div>
-      <DetectionFail />
-    </div>
-    },{
+    {
       path: "/admin", element: 
     <div>
       <AdminHome />
@@ -58,8 +51,7 @@ const Container = () => {
     <div>
       <TestPage />
     </div>
-    },
-    
+    },    
   ]);
 
   return routes;

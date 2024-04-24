@@ -1,5 +1,5 @@
 import React from 'react'
-import image from './check.png' 
+import image from '../images/check.png' 
 import Button from './Button'
 import { useLocation } from 'react-router-dom';
 
@@ -28,7 +28,7 @@ const Marked = () => {
             <li><b className='text-[#002772]'>Date:</b> {new Date(details.markedAt).toLocaleString('en-US', {timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit'})}</li>
         </ul>
         </div>
-        <img className='mx-auto mt-20' width = "175px" height = "183px" src = {image}  />
+        <img className='mx-auto mt-20' alt  = "success tick image" width = "175px" height = "183px" src = {image}  />
         <h1 className='my-10 text-2xl font-bold text-[#002772]'>Attendance Marked</h1>
         <Button value='Home'css='text-white bg-[#0049d9]' dst=''></Button>
     </>

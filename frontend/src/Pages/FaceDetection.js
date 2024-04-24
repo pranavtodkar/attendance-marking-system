@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Button from './Button';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AuthIdle from "../images/auth-idle.svg";
 import AuthFace from "../images/auth-face.svg";
 import * as faceapi from 'face-api.js';
@@ -322,7 +322,7 @@ const FaceDetection = () => {
         </div>
       )}
       { localUserStream && 
-        <a href='/verify'><button className='text-white bg-[#0049d9] w-80 h-11 my-2 rounded-lg'>Retry</button></a>
+        <a href='/facedetection'><button className='text-white bg-[#0049d9] w-80 h-11 my-2 rounded-lg'>Retry</button></a>
       }
       <Button css='bg-white text-[#0049d9] border-2' value='Home' redirect={toHome} dst=''></Button>
     </div>

@@ -1,5 +1,5 @@
-import { React , useState,useEffect } from 'react';
-import image from './logo.jpg'
+import { React , useState } from 'react';
+import image from '../images/logo.jpg';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -35,7 +35,7 @@ function StudentHome() {
     localStorage.setItem('JWT', JWT);
     toast.success(`${course_code} Attendance`);
 
-    navigate('/verify');
+    navigate('/facedetection');
   }
 
   const handleChange = (e) =>{

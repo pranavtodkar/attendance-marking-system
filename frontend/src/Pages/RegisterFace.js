@@ -219,7 +219,7 @@ function RegisterFace() {
 
                     if(response.status === 200) {
                         toast.success("Face Data Registered");
-                        navigate("/verify");
+                        navigate("/facedetection");
                     }else{
                         toast.error("Something went wrong. Please try again.");
                     }
