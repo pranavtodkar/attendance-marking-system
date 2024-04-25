@@ -143,6 +143,7 @@ app.post('/getAttendSessionJWT', (req, res) => {
         const attendance_session_id = data.rows[0]?.id;
         console.log("course_code:", course_code);
         console.log("attendance_session_id:", attendance_session_id);
+        
         const JWT = jwt.sign({ rollNo, attendance_session_id }, secretKey, { expiresIn: '5m' });
         res.json({ sessionExists: true, course_code, JWT });
       }

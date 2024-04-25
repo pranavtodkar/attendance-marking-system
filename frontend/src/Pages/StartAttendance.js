@@ -4,7 +4,8 @@ import { useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify';
 
 const StartAttendance = () => {
-    
+
+   
     
     const location = useLocation();
     const teacher_id = location.state && location.state.teacher_id;
