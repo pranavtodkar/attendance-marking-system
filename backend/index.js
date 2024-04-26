@@ -139,8 +139,8 @@ app.post('/getAttendSessionJWT', (req, res) => {
           return;
         }
         console.log("session details:", data.rows[0]);
-        const course_code = data.rows[0]?.course_code;
-        const attendance_session_id = data.rows[0]?.id;
+        const course_code = data.rows[0].course_code;
+        const attendance_session_id = data.rows[0].id;
         console.log("course_code:", course_code);
         console.log("attendance_session_id:", attendance_session_id);
         
