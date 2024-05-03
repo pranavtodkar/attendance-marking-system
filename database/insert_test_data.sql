@@ -6,14 +6,6 @@ VALUES
     (2203303, 'Adwita Deshpande'),
     (2203312, 'Lakshay Khuarana');
 
--- Insert data into teachers
-INSERT INTO teachers (name)
-VALUES
-    ('Mantu Santra'),
-    ('Raja Mitra'),
-    ('Sandipan De'),
-    ('Clint George');
-
 -- Insert data into courses
 INSERT INTO courses (course_code, name)
 VALUES
@@ -32,7 +24,7 @@ VALUES
 -- Insert data into course_teachers
 INSERT INTO course_teachers (course_code, teacher_id)
 VALUES
-    ('CH102', 1),
-    ('CH102', 2),
-    ('CH103', 3),
-    ('CH104', 4);
+    ('CH102', 1), -- First do faculty login and then put teacher_id of according to the teachers table
+    ('CH102', 2), -- First do faculty login and then put teacher_id of according to the teachers table
+    ('CH103', 3), -- First do faculty login and then put teacher_id of according to the teachers table
+    ('CH104', 4); -- First do faculty login and then put teacher_id of according to the teachers table
