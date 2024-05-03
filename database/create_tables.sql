@@ -20,7 +20,7 @@ CREATE TABLE courses (
 -- Create the teachers table
 CREATE TABLE teachers (
     teacher_id SERIAL PRIMARY KEY,
-    name VARCHAR
+    email VARCHAR UNIQUE
 );
 
 -- Create the course_teachers table
@@ -41,6 +41,7 @@ CREATE TABLE course_registrations (
 CREATE TABLE attendance_session (
     id SERIAL PRIMARY KEY,
     course_code VARCHAR REFERENCES courses(course_code),
+    teacher_id INTEGER REFERENCES teachers(teacher_id),
     start_time TIMESTAMP,
     teacher_ip VARCHAR,
     attendance_on BOOLEAN

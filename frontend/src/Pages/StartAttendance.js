@@ -3,17 +3,10 @@ import Button from './Button'
 import { useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify';
 
-const StartAttendance = () => {
-
-   
-    
-    const location = useLocation();
-    const teacher_id = location.state && location.state.teacher_id;
-    console.log("teacher_id:", teacher_id);
+const StartAttendance = () => {  
 
     const details = {
       name: 'Hard Kapadia',
-      teacherId: teacher_id,
       school: 'School of Computer Science'
     }
 
@@ -25,8 +18,8 @@ const StartAttendance = () => {
           method: 'POST',
           headers:{
             'Content-Type' : 'application/json',
-          },
-          body: JSON.stringify({ teacher_id })
+            'Authorization': localStorage.getItem('JWT'),
+          }
         });
         const courses = await res.json();
         console.log("listCourses:", courses);
@@ -50,6 +43,7 @@ const StartAttendance = () => {
           method: 'POST',
           headers:{
             'Content-Type' : 'application/json',
+            'Authorization': localStorage.getItem('JWT'),
           },
           body: JSON.stringify({ course_code : courseCode })
         }).then((res) => {
@@ -70,6 +64,7 @@ const StartAttendance = () => {
           method: 'POST',
           headers:{
             'Content-Type' : 'application/json',
+            'Authorization': localStorage.getItem('JWT'),
           },
           body: JSON.stringify({ course_code : courseCode })
         }).then((res) => {
@@ -85,7 +80,6 @@ const StartAttendance = () => {
                 <div className='bg-[#d9d9d9] w-32 h-32'></div>
                 <ul className='text-left items-center'>
                     <li><b className='text-[#002772]'>Name:</b> {details.name}</li>
-                    <li><b className='text-[#002772]'>Teacher ID:</b> {details.teacherId} </li>
                     <li><b className='text-[#002772]'>School :</b> {details.school}</li>
                     <li><b className='text-[#002772]'>Date:</b> XX/XX/2024</li>
                 </ul>
