@@ -150,7 +150,7 @@ app.post('/teacherLogin', (req, res) => {
   // (Possibly can check from Profs list)
 
   pool.query(
-    'INSERT INTO teachers (email) VALUES ($1) ON CONFLICT (email) DO NOTHING RETURNING teacher_id;',
+    'INSERT INTO teachers (email) VALUES ($1) ON CONFLICT (email) DO UPDATE SET email = EXCLUDED.email RETURNING teacher_id;',
     [email],
     (err, data) => {
       if (err) {
@@ -159,11 +159,13 @@ app.post('/teacherLogin', (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
         return;
       }
+      console.log("data:", data);
       const teacher_id = data.rows[0].teacher_id;
       console.log("teacher_id:", teacher_id);
       
       const JWT = jwt.sign({ teacher_id }, process.env.SECRET_KEY, { expiresIn: '1d' });
-      res.json(JWT);
+      console.log("JWT:", JWT);
+      res.json({ JWT });
     }
   );
 });

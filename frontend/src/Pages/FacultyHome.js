@@ -19,7 +19,7 @@ function FacultyHome() {
                   Accept: 'application/json'
               }
           })
-          .then((res) => {
+          .then( async(res) => {
               // console.log('data', res.data);
               const googleUser = res.data;
 
@@ -36,12 +36,12 @@ function FacultyHome() {
                   },
                   body: JSON.stringify({ email : googleUser.email })
                 });
-                const JWT = await res.json();
+                const { JWT } = await res?.json();
         
                 localStorage.setItem('JWT', JWT);
                 toast.success(`Login Successful`);
               }
-              teacherLogin();   
+              await teacherLogin();   
 
               navigate('/faculty/startAttendance');
 
