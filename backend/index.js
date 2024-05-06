@@ -164,7 +164,6 @@ app.post('/teacherLogin', (req, res) => {
       console.log("teacher_id:", teacher_id);
       
       const JWT = jwt.sign({ teacher_id }, process.env.SECRET_KEY, { expiresIn: '1d' });
-      console.log("JWT:", JWT);
       res.json({ JWT });
     }
   );
@@ -242,6 +241,35 @@ app.post('/stopAttendance', verifyToken, (req, res) => {
         console.log("Attendance stopped");
 
         res.json({ status: 'Attendance Started' });
+      }
+    }
+  );
+});
+
+app.get('/getAttendance', (req, res) => {
+  console.log("getAttendance called at", new Date().toLocaleString());
+  
+  const { email } = req.query;  
+  console.log("email:", email);
+
+  pool.query(
+    `SELECT c.name AS course_code, s.name AS roll_no, a.marked_at
+    FROM attendance a
+    JOIN attendance_session ass ON a.attendance_session_id = ass.id
+    JOIN courses c ON ass.course_code = c.course_code
+    JOIN students s ON a.roll_no = s.roll_no
+    JOIN teachers t ON ass.teacher_id = t.teacher_id
+    WHERE t.email = $1;`,
+    [email],
+    (err, data) => {
+      if (err) {
+        console.error("Error in getAttendance:", err.message);
+
+        return res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+        console.log("attendanceData:", data.rows);
+
+        res.json(data.rows);
       }
     }
   );
