@@ -30,13 +30,6 @@ CREATE TABLE course_teachers (
     course_code VARCHAR REFERENCES courses(course_code)
 );
 
--- Create the course_registrations table
-CREATE TABLE course_registrations (
-    id SERIAL PRIMARY KEY,
-    course_code VARCHAR REFERENCES courses(course_code),
-    roll_no INTEGER REFERENCES students(roll_no)
-);
-
 -- Create the attendance_session table
 CREATE TABLE attendance_session (
     id SERIAL PRIMARY KEY,

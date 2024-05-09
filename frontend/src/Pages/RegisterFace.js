@@ -11,6 +11,7 @@ function RegisterFace() {
     const [fileName, setFileName] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [descriptor, setDescriptor] = useState(null);    
+    const [name, setName] = useState(null);
 
     useEffect(() => {
         if (image) {
@@ -59,8 +60,6 @@ function RegisterFace() {
             return null;
         }
 
-        toast.info("Processing Image. Please wait...");
-
         let img;
 
         try {
@@ -79,11 +78,17 @@ function RegisterFace() {
         return detections.descriptor;
     }
 
+    const handleNameChange = (e) => {        
+        setName((e.target.value == "") ? null : e.target.value);
+    };
+
     return (
         <div>
             <div className='flex flex-col justify-center px-14 w-full mt-3'>
             <h1 className='my-10 text-2xl text-left font-bold text-[#002772]'>Register Face</h1>
-            <h1 className=' text-left font-bold'>Your Photo please</h1>
+            <h1 className=' text-left font-bold'>Name</h1>
+            <input value={name} onChange={handleNameChange} className='border-2 pl-4 w-full border-gray-300 w-80 h-11 my-2 rounded-lg ' type='text'></input>
+            <h1 className=' text-left font-bold mt-10'>Your Photo please</h1>
             </div> 
             {image &&
                 <div className="w-full p-4 text-right">
@@ -195,7 +200,11 @@ function RegisterFace() {
             )}
             <button
                 onClick={async () => {
-                    if(!descriptor) {
+                    if(!name){
+                        toast.error("Please enter your name.");
+                        return;
+                    }
+                    if(!image) {
                         toast.error("Please upload a photo.");
                         return;
                     }
@@ -206,7 +215,7 @@ function RegisterFace() {
                             "Content-Type": "application/json",
                             'Authorization': localStorage.getItem('JWT')
                         },
-                        body: JSON.stringify({ descriptor: descriptorString }),
+                        body: JSON.stringify({ descriptor: descriptorString, name }),
                     });
                     const data = await response.json();
                     console.log("data:", data);
@@ -214,14 +223,18 @@ function RegisterFace() {
                     if(response.status === 200) {
                         toast.success("Face Data Registered");
                         navigate("/facedetection");
+                    }else if(response.status === 401) {
+                        toast.error("Token Timed out.");
+                        navigate("/");
                     }else{
                         toast.error("Something went wrong. Please try again.");
                     }
 
                 }}
-                className="text-white bg-[#0049d9] w-80 h-11 mt-10 my-2 rounded-lg"
+                className={`text-white ${(!descriptor && image) ? 'bg-gray-400' : 'bg-[#0049d9]'} w-80 h-11 mt-10 my-2 rounded-lg`}
+                disabled={!descriptor && image}
             >
-                Register
+                {(!descriptor && image) ? 'Processing Photo...' : 'Register'}
             </button>
             <Link to={`/`}><button className={`bg-white text-[#0049d9] border-2 w-80 h-11 my-2 rounded-lg`} > Home</button></Link>
         </div>

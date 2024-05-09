@@ -13,14 +13,6 @@ VALUES
     ('CH103', 'Geochemistry'),
     ('CH104', 'Material science');
 
--- Insert data into course_registrations
-INSERT INTO course_registrations (course_code, roll_no)
-VALUES
-    ('CH102', 2206316),
-    ('CH102', 2206315),
-    ('CH103', 2203303),
-    ('CH104', 2203312);
-
 -- Insert data into course_teachers
 INSERT INTO course_teachers (course_code, teacher_id)
 VALUES

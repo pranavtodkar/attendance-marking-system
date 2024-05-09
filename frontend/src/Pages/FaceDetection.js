@@ -43,6 +43,12 @@ const FaceDetection = () => {
       });
       const data = await response.json();
       console.log('data:', data);
+
+      if(response.status === 401) {
+        toast.error("Token Timed out.");
+        navigate("/");
+        return;
+      }
       if (data.status === 'No Face Data Found') {
         navigate('/registerface');
         return;
@@ -98,6 +104,13 @@ const FaceDetection = () => {
           });
           const data = await res.json();
           console.log("data:", data);
+
+          if(res.status === 401) {
+            toast.error("Token Timed out.");
+            navigate("/");
+            return;
+          }
+
           toast.success(`Attendance marked successfully.`);
 
           navigate('/marked', { state: { attendanceData : data } });  
