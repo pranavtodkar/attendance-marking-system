@@ -188,6 +188,41 @@ app.post('/teacherLogin', (req, res) => {
   );
 });
 
+// check if any attendance session is ongoing for teacher_id
+app.post('/getStartTime', verifyToken, (req, res) => {
+  console.log("getStartTime called at", new Date().toLocaleString());
+
+  const { teacher_id } = req;
+  console.log("teacher_id:", teacher_id);
+
+  pool.query(
+    `SELECT start_time, course_code FROM attendance_session WHERE teacher_id = $1 AND attendance_on = true;`,
+    [teacher_id],
+    (err, data) => {
+      if (err) {
+        console.error("Error in getStartTime:", err.message);
+
+        res.status(500).json({ error: 'Internal Server Error' });
+        return;
+      }
+
+      if (data.rows.length === 0) {
+        console.log("No active session found.");
+
+        res.json({ sessionExists: false, startTime: null });
+        return;
+      }
+
+      const startTime = data.rows[0].start_time;
+      const courseCode = data.rows[0].course_code;
+      console.log("startTime:", startTime);
+      console.log("courseCode:", courseCode);
+
+      res.json({ sessionExists: true, startTime, courseCode });
+    }
+  );
+});
+
 app.post('/getMyCourses', verifyToken, (req, res) => {
   console.log("getMyCourses called at", new Date().toLocaleString());
 
