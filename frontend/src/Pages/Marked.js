@@ -25,7 +25,7 @@ const Marked = () => {
             <li><b className='text-[#002772]'>Roll No.:</b> {details.rollno} </li>
             {/* <li><b className='text-[#002772]'>Branch :</b> {details.branch}</li> */}
             <li><b className='text-[#002772]'>Course Code:</b> {details.courseCode}</li>
-            <li><b className='text-[#002772]'>Date:</b> {new Date(details.markedAt).toLocaleString('en-US', {timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit'})}</li>
+            <li><b className='text-[#002772]'>Date:</b> {new Date(details.markedAt).toLocaleString('en-IN', {timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit'})}</li>
         </ul>
         </div>
         <img className='mx-auto mt-20' alt  = "success tick image" width = "175px" height = "183px" src = {image}  />
