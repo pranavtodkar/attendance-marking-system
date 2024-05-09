@@ -22,55 +22,74 @@ app.post('/getAttendSessionJWT', (req, res) => {
   console.log("rollNo:", rollNo);
   console.log("IP:", IP);  
 
-  pool.query(
-    `SELECT id, course_code FROM attendance_session WHERE teacher_ip=$1 AND attendance_on = true;`,
-    [IP],
-    (err, data) => {
-      if (err) {
-        console.log("Error in getAttendSessionJWT:", err.message);
-        
-        res.status(500).json({ error: 'Internal Server Error' });
-        return;
-      }
-      if (data.rows.length === 0) {
-        console.log("No active session found.");
+  pool.query('SELECT 1 FROM students WHERE roll_no = $1', [rollNo], (err, data) => {
+    if (err) {
+      console.log('Error in getAttendSessionJWT checking roll_no:', err.message);
 
-        res.json({ sessionExists: false, course_code: '', JWT: '' });
-        return;
-      }
-      const course_code = data.rows[0].course_code;
-      const attendance_session_id = data.rows[0].id;
-      console.log("course_code:", course_code);
-      console.log("attendance_session_id:", attendance_session_id);
-      
-      const JWT = jwt.sign({ rollNo, attendance_session_id }, process.env.SECRET_KEY, { expiresIn: '5m' });
-      res.json({ sessionExists: true, course_code, JWT });      
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
     }
-  );
+
+    // If the roll_no doesn't exist, return an error
+    if (data.rows.length === 0) {
+      console.log('Roll number not found.');
+
+      res.json({ rollNoExists: false, sessionExists: false, course_code: '', JWT: '' });
+      return;
+    }
+    
+    pool.query(
+      `SELECT id, course_code FROM attendance_session WHERE teacher_ip=$1 AND attendance_on = true;`,
+      [IP],
+      (err, data) => {
+        if (err) {
+          console.log('Error in getAttendSessionJWT:', err.message);
+          res.status(500).json({ error: 'Internal Server Error' });
+          return;
+        }
+
+        if (data.rows.length === 0) {
+          console.log('No active session found.');
+          res.json({ rollNoExists: true, sessionExists: false, course_code: '', JWT: '' });
+          return;
+        }
+
+        const course_code = data.rows[0].course_code;
+        const attendance_session_id = data.rows[0].id;
+        console.log('course_code:', course_code);
+        console.log('attendance_session_id:', attendance_session_id);
+
+        const JWT = jwt.sign({ rollNo, attendance_session_id }, process.env.SECRET_KEY, { expiresIn: '5m' });
+        res.json({ rollNoExists:true, sessionExists: true, course_code, JWT });
+      }
+    );
+  });
 });
 
-app.post('/registerFace', verifyToken, (req, res) => {
+app.post('/registerFace', verifyToken, async (req, res) => {
   console.log("registerFace called at", new Date().toLocaleString());
 
   const { rollNo } = req;
-  const { descriptor } = req.body;
+  const { descriptor, name } = req.body;
   console.log('rollNo:', rollNo);
   console.log('descriptor:', descriptor);
+  console.log('name:', name);
 
-  pool.query(
-    `INSERT INTO face_recog_data (roll_no, face_recog_data) VALUES ($1, $2);`,
-    [rollNo, descriptor],
-    (err, data) => {
-      if (err) {
-        console.error("Error in registerFace:", err.message);
+  try {
+    await pool.query(
+      'UPDATE students SET name = $1 WHERE roll_no = $2', 
+      [name, rollNo]);
 
-        res.status(500).json({ error: 'Internal Server Error' });
-        return;
-      }
+    await pool.query(
+      'INSERT INTO face_recog_data (roll_no, face_recog_data) VALUES ($1, $2)', 
+      [rollNo, descriptor]);
 
-      res.json({ status: 'Face Data Registered' });
-    }
-  );
+    res.json({ status: 'Face Data Registered' });
+  } catch (err) {
+    console.error('Error in registerFace:', err.message);
+
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 app.post('/getFaceData', verifyToken, (req, res) => {
@@ -283,7 +302,7 @@ function verifyToken(req, res, next) {
   if (!token) {
     console.log("No JWT provided.");
 
-    return res.status(403).json({ message: 'No token provided' });
+    return res.status(401).json({ message: 'No token provided' });
   }
 
   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {

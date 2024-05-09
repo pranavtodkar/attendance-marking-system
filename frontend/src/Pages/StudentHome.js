@@ -25,7 +25,12 @@ function StudentHome() {
       body: JSON.stringify({ rollNo })
     });
 
-    const { sessionExists, course_code, JWT } = await res?.json();
+    const { rollNoExists, sessionExists, course_code, JWT } = await res?.json();
+    if(!rollNoExists){
+      toast.error("Invalid Roll No.");
+      return;
+    }
+
 
     if(!sessionExists){
       toast.error("No Attendance Ongoing");
